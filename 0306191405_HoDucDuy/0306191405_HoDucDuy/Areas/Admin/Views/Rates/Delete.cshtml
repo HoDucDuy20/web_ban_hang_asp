@@ -1,0 +1,57 @@
+﻿@model _0306191405_HoDucDuy.Areas.Admin.Models.Rate
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+
+<h3>Bạn có muốn xoá?</h3>
+<div><a asp-action="Index"><i class="mdi mdi-arrow-left font-weight-bold" style="font-size: 40px;"></i></a></div>
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @*@Html.DisplayNameFor(model => model.Account)*@
+            Tài khoản
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Account.Username)
+        </dd>
+        <dt class="col-sm-2">
+            @*@Html.DisplayNameFor(model => model.Account)*@
+            Họ tên
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Account.FullName)
+        </dd>
+        <dt class="col-sm-2">
+            @*@Html.DisplayNameFor(model => model.Product)*@
+            Sản phẩm
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Product.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Star)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Star)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Time)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Time)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Xoá" class="btn btn-danger" /> 
+    </form>
+</div>

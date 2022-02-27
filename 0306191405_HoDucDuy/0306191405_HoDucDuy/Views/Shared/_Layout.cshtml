@@ -1,0 +1,242 @@
+﻿@{
+    IEnumerable<_0306191405_HoDucDuy.Areas.Admin.Models.InfoShop> infoShops = ViewData["InfoShops"] as IEnumerable<_0306191405_HoDucDuy.Areas.Admin.Models.InfoShop>;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <link rel="icon" href="~/images/fevicon.png" type="image/gif" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>@ViewData["Title"]</title>
+
+    <partial name="_CSSPartial" />
+    @RenderSection("CSS", required: false)
+</head>
+<body class="@ViewData["SubPage"]">
+
+    <div class="hero_area">
+        @foreach (var item in infoShops)
+        {
+            <!-- header section strats -->
+            <header class="header_section">
+                <div class="header_top">
+                    <div class="container-fluid">
+                        <div class="top_nav_container">
+                            <div class="contact_nav">
+                                <a href="">
+                                    <i class="fa fa-phone" aria-hidden="true"></i>
+                                    <span>
+                                        Call :  @Html.DisplayFor(modelItem => item.Phone)
+                                    </span>
+                                </a>
+                                <a href="@Html.DisplayFor(modelItem => item.Email)">
+                                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                                    <span>
+                                        Email :  @Html.DisplayFor(modelItem => item.Email)
+                                    </span>
+                                </a>
+                            </div>
+                            <form asp-controller="Product" asp-action="Product" class="search_form" >
+                                <input type="number" name="type" value="@ViewBag.type" hidden/>
+                                <input type="text" class="form-control" value="@ViewBag.search" placeholder="Search here..." name="name">
+                                <button class="" type="submit">
+                                    <i class="fa fa-search" aria-hidden="true"></i>
+                                </button>
+                            </form>
+                            <div class="user_option_box">
+                                @if (ViewBag.Us != null)
+                                {
+                                <a class="account-link" asp-controller="user" asp-action="info">
+                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                    <span>
+                                        @ViewBag.Us
+                                    </span>
+                                </a>
+                                }
+                                else
+                                {
+                                    <a class="account-link" asp-controller="home" asp-action="login">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                        <span>
+                                            Login
+                                        </span>
+                                    </a>
+                                }
+                                <a class="cart-link" asp-controller="cart" asp-action="cart">
+                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                    <span>
+                                        Cart
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="header_bottom">
+                    <div class="container-fluid">
+                        <nav class="navbar navbar-expand-lg custom_nav-container ">
+                            <a class="navbar-brand" asp-controller="home" asp-action="index">
+                                <span>
+                                    Minics
+                                </span>
+                            </a>
+
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class=""> </span>
+                            </button>
+
+                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                <ul class="navbar-nav ">
+                                    <li class="nav-item  @ViewBag.Index">
+                                        <a class="nav-link" asp-controller="Home" asp-action="Index">Home <span class="sr-only">(current)</span></a>
+                                    </li>
+                                    <li class="nav-item  @ViewBag.About">
+                                        <a class="nav-link" asp-controller="Home" asp-action="About">About</a>
+                                    </li>
+                                    <li class="nav-item  @ViewBag.Product">
+                                        <a class="nav-link" asp-controller="Product" asp-action="Product">Products</a>
+                                    </li>
+                                    <li class="nav-item  @ViewBag.Why">
+                                        <a class="nav-link" asp-controller="Feedback" asp-action="Why">Why Us</a>
+                                    </li>
+                                    <li class="nav-item  @ViewBag.Testimonial">
+                                        <a class="nav-link" asp-controller="Feedback" asp-action="Testimonial">Testimonial</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <!-- end header section -->
+            @RenderBody()
+            <!-- end client section -->
+            <!-- info section -->
+            <section class="info_section ">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="info_contact">
+                                <h5>
+                                    <a href="" class="navbar-brand">
+                                        <span>
+                                            Minics
+                                        </span>
+                                    </a>
+                                </h5>
+                                <p>
+                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                    @Html.DisplayFor(modelItem => item.Address)
+                                </p>
+                                <p>
+                                    <i class="fa fa-phone" aria-hidden="true"></i>
+                                    @Html.DisplayFor(modelItem => item.Phone)
+                                </p>
+                                <p>
+                                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                                    @Html.DisplayFor(modelItem => item.Email)
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="info_info">
+                                <h5>
+                                    Information
+                                </h5>
+                                <p>
+                                    @Html.DisplayFor(modelItem => item.Info)
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="info_links">
+                                <h5>
+                                    Useful Link
+                                </h5>
+                                <ul>
+                                    <li>
+                                        <a href="index.html">
+                                            Home
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="about.html">
+                                            About
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="product.html">
+                                            Products
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="why.html">
+                                            Why Us
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="testimonial.html">
+                                            Testimonial
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="info_form ">
+                                <h5>
+                                    Newsletter
+                                </h5>
+                                <form action="">
+                                    <input type="email" placeholder="Enter your email">
+                                    <button>
+                                        Subscribe
+                                    </button>
+                                </form>
+                                <div class="social_box">
+                                    <a href="@Html.DisplayFor(modelItem => item.Facebook)">
+                                        <i class="fa fa-facebook" aria-hidden="true"></i>
+                                    </a>
+                                    <a href="@Html.DisplayFor(modelItem => item.Twitter)">
+                                        <i class="fa fa-twitter" aria-hidden="true"></i>
+                                    </a>
+                                    <a href="@Html.DisplayFor(modelItem => item.Instagram)">
+                                        <i class="fa fa-instagram" aria-hidden="true"></i>
+                                    </a>
+                                    <a href="@Html.DisplayFor(modelItem => item.Youtube)">
+                                        <i class="fa fa-youtube" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- end info_section -->
+            <!-- footer section -->
+            <footer class="footer_section">
+                <div class="container">
+                    <p>
+                        &copy; <span id="displayYear"></span> All Rights Reserved By
+                        <a href="https://html.design/">Free Html Templates</a>
+                    </p>
+                </div>
+            </footer>
+            <!-- footer section -->
+        }
+        <partial name="_JSPartial" />
+        @RenderSection("JS", required: false)
+        @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

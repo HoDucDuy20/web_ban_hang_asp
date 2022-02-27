@@ -1,0 +1,136 @@
+﻿@model _0306191405_HoDucDuy.Areas.Admin.Models.ProductType
+@using X.PagedList.Mvc.Common
+@using X.PagedList.Mvc.Core
+@*@model _0306191405_HoDucDuy.Areas.Admin.Models.ProductType*@
+
+@{
+    ViewData["Title"] = "Index";
+}
+@{
+    X.PagedList.IPagedList<_0306191405_HoDucDuy.Areas.Admin.Models.ProductType> productTypes = ViewData["ProductTypes"] as X.PagedList.IPagedList<_0306191405_HoDucDuy.Areas.Admin.Models.ProductType>;
+    var id = ViewData["id"];
+    IEnumerable<_0306191405_HoDucDuy.Areas.Admin.Models.Product> products = ViewData["Products"] as IEnumerable<_0306191405_HoDucDuy.Areas.Admin.Models.Product>;
+}
+<h1>Loại sản phẩm</h1>
+<hr />
+
+@*<p>
+        <a asp-action="Create">Thêm mới</a>
+    </p>*@
+<h4>Thêm loại sản phẩm</h4>
+<div class="row mt-2">
+    <div class="col-md-5">
+        @if (id == null)
+        {
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" checked="checked" asp-for="Status" /> @Html.DisplayNameFor(model => model.Status)
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Thêm" class="btn btn-primary" />
+                </div>
+            </form>
+        }
+        else
+        {
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" name="id" asp-for="Id" />
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" checked="checked" asp-for="Status" /> @Html.DisplayNameFor(model => model.Status)
+                    </label>
+                </div>
+                <div class="form-group">
+                    <a asp-action="index" asp-route-id="" class="btn btn-primary">Huỷ</a>&nbsp;&nbsp;
+                    <input type="submit" value="Sửa" class="btn btn-primary" />
+                </div>
+            </form>
+        }
+
+    </div>
+    <div class="col-md-6">
+        <form asp-action="Index" class="form-group pt-4 d-flex justify-content-end">
+            <div class="col-7">
+                <div class="d-flex">
+                    <input type="search" id="form1" name="namesearch" value="@ViewBag.search" class="form-control" placeholder="Tìm kiếm..." />
+                    <button type="submit" class="btn btn-primary">
+                        <i class="mdi mdi-magnify"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<hr />
+<h4>Danh sách loại sản phẩm</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                Sản phẩm
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody class="text-light">
+        @foreach (var item in productTypes)
+        {
+            //var p =  products.Where(c => c.ProductTypeId == item.Id);
+            var produtGroup = products.Where(x => x.ProductTypeId == item.Id).GroupBy(x => x.ProductType.Name)
+                                   .Select(x => new { productType = x.Key, numProduct = x.Count() });
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @try
+                    {
+                        <span>@produtGroup.First().numProduct</span>
+                    }
+                    catch
+                    {
+                        <span>0</span>
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    <a asp-action="Index" asp-route-id="@item.Id">Sửa</a> |
+                    @*<a asp-action="Details" asp-route-id="@item.Id">Xem</a> |*@
+                    <a asp-action="Delete" asp-route-id="@item.Id">Xoá</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div>
+    @Html.PagedListPager(productTypes, c => Href("~/Admin/Products/Index?page=" + c), new PagedListRenderOptions
+    {
+       LiElementClasses = new string[] { "page-item" },
+       PageClasses = new string[] { "page-link" }
+    })
+</div>
+@section JS {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

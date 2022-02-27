@@ -1,0 +1,103 @@
+﻿@model _0306191405_HoDucDuy.Areas.Admin.Models.Account
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+@*<h1>Create</h1>*@
+
+<h3>Tạo tài khoản</h3>
+
+<div><a asp-action="Index"><i class="mdi mdi-arrow-left font-weight-bold" style="font-size: 40px;"></i></a></div>
+
+<div class="row pr-3">
+    <div class="col">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Username" class="control-label"></label>
+                        <input asp-for="Username" class="form-control" />
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password" class="control-label"></label>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="IsAdmin" /> @Html.DisplayNameFor(model => model.IsAdmin)
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Phone" class="control-label"></label>
+                        <input asp-for="Phone" class="form-control" />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Address" class="control-label"></label>
+                        <input asp-for="Address" class="form-control" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="FullName" class="control-label"></label>
+                        <input asp-for="FullName" class="form-control" />
+                        <span asp-validation-for="FullName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Status" /> @Html.DisplayNameFor(model => model.Status)
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-6 p-0">
+                <label asp-for="AvatarFile" class="control-label"></label>
+                <input type="hidden" asp-for="Avatar" />
+                <input asp-for="AvatarFile" class="form-control" />
+                <span asp-validation-for="AvatarFile" class="text-danger"></span>
+                <span id="validate" class="text-danger" style="display: none;">Ảnh không đúng định dạng .jpg hoặc .jpeg hoặc .png</span>
+                <br />
+                <img id="imgPreview" style="width: 200px; display: none;" />
+            </div>            
+            <div class="form-group">
+                <input type="submit" value="Tạo" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@*<div>
+    <a asp-action="Index">Trở lại</a>
+</div>*@
+
+@section JS {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+<script>
+    $(document).ready(function () {
+        $("#AvatarFile").on("change", function (e) {
+            var test_value = $("#AvatarFile").val();
+            var extension = test_value.split('.').pop().toLowerCase();
+            if ($.inArray(extension, ['png', 'jpeg', 'jpg']) == -1) {
+                $("#AvatarFile").val('');
+                $("#validate").show();
+                $("#imgPreview").hide().attr("src", filePath);
+                return false;
+            } else {
+                var filePath = URL.createObjectURL(e.target.files[0]);
+                $("#validate").hide();
+                $("#imgPreview").show().attr("src", filePath);
+            }
+        });
+    });
+</script>
+}

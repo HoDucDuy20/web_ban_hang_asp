@@ -1,0 +1,158 @@
+﻿@*@model IEnumerable<_0306191405_HoDucDuy.Areas.Admin.Models.Product>*@
+@using X.PagedList.Mvc.Common
+@using X.PagedList.Mvc.Core
+@model X.PagedList.IPagedList<_0306191405_HoDucDuy.Areas.Admin.Models.Product>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Danh sách sản phẩm</h1>
+
+<p>
+    <a asp-action="Create">Thêm mới</a>
+</p>
+<form asp-action="Index" class="form-group ">
+    <div class="row">
+        <div class="col-2">
+            @*<div class="control-label">Class</div>*@
+            <select class="form-control text-light" id="ddltype" name="type" asp-items="ViewBag.ProductTypeId" onchange="document.getElementById('btnSubmit').click();">
+                <option value="0">Tất cả</option>
+            </select>
+        </div>
+        <div class="col-2">
+            <select class="form-control text-light" name="stt" onchange="document.getElementById('btnSubmit').click();">
+                @if (ViewBag.stt == 0)
+                {
+                    <option value="0" selected>Hoạt động</option>
+                    <option value="1">Không hoạt động</option>
+                }
+                else
+                {
+                    <option value="0">Hoạt động</option>
+                    <option value="1" selected>Không hoạt động</option>
+                }
+            </select>
+        </div>
+        <div class="col-4">
+            <div class="d-flex">
+                    <input type="search" id="form1" name="name" value="@ViewBag.search" class="form-control" placeholder="Tìm kiếm..." />
+                <button type="submit" class="btn btn-primary">
+                    <i class="mdi mdi-magnify"></i>
+                </button>
+            </div>
+
+            @*<input type="number" name="type" value="@ViewBag.type" hidden />
+            <input type="text" class="form-control"   >
+            <button class="" type="submit">
+                <i class="fa fa-search" aria-hidden="true"></i>
+            </button>*@
+        </div>
+    </div>
+    <input id="btnSubmit" hidden type="submit" value="submit" />
+</form>
+<table class="table">
+    <thead >
+        <tr>
+            <th>
+                @*@Html.DisplayNameFor(model => model.SKU)*@
+                SKU
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.Name)*@
+                Tên sản phẩm
+            </th>
+            @*<th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>*@
+            <th>
+                @*@Html.DisplayNameFor(model => model.Price)*@
+                Giá
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.Stock)*@
+                Số lượng
+            </th>
+            <!--<th>-->
+            @*@Html.DisplayNameFor(model => model.Star)*@
+            <!--Đánh giá
+    </th>-->
+            <th>
+                @*@Html.DisplayNameFor(model => model.ProductType)*@
+                Loại sản phẩm
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.Image)*@
+                Ảnh
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.status)*@
+                Nổi bật
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.status)*@
+                Trạng thái
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody class="text-light">
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SKU)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stock)
+            </td>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.Star)
+        </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductType.Name)
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.Image)*@
+                <img class="rounded" id="imgPreview" style="width: 50px;" src="~/img/product/@Html.DisplayFor(modelItem => item.Image)" />
+            </td>
+            <td  style="text-align:center;">
+                @if (item.Highlights)
+                {
+                    <a asp-action="UnActive" asp-route-id="@item.Id"><i class="mdi mdi-check"></i></a>
+                }
+                else
+                {
+                    <a asp-action="Active" asp-route-id="@item.Id"><i class="mdi mdi-close"></i></a>
+                }
+                
+                @*@Html.DisplayFor(modelItem => item.Highlights)*@
+            </td>
+            <td  style="text-align:center;">                
+                @Html.DisplayFor(modelItem => item.status)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Sửa</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Xem</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Xoá</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+<div>
+    @Html.PagedListPager(Model, c => Href("~/Admin/Products/Index?page=" + c), new PagedListRenderOptions
+    {
+       LiElementClasses = new string[] { "page-item" },
+       PageClasses = new string[] { "page-link" }
+    })
+</div>

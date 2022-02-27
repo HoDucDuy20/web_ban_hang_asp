@@ -1,0 +1,175 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model IEnumerable<_0306191405_HoDucDuy.Areas.Admin.Models.Cart>
+@{
+    ViewData["Title"] = "Minics";
+    ViewData["SubPage"] = "sub_page";
+}
+
+</div>
+<main>
+    <header id="site-header">
+        <div class="container">
+            <h1>Shopping cart <span>[</span> <em><a href="" target="_blank">CodePen Challange</a></em> <span class="last-span is-open">]</span></h1>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <section id="cart">
+            @{int Tong = 0; int sl = 0;}
+            @foreach (var item in Model)
+            {
+                <article class="product">
+                    <header>
+                        <a class="remove" asp-controller="Cart" asp-action="RemoveCart" asp-route-id="@item.Id">
+                            <img src="~/img/product/@Html.DisplayFor(modelItem => item.Product.Image)" alt="" class="product-frame">
+                            <h3>Remove product</h3>
+                        </a>
+                    </header>
+
+                    <div class="content">
+
+                        <a asp-controller="Product" asp-action="Detail" asp-route-id="@item.Product.Id"><h1><strong>@Html.DisplayFor(modelItem => item.Product.Name)</strong></h1></a>
+                        <p>Product Code - @Html.DisplayFor(modelItem => item.Product.SKU)</p>
+                        
+
+                    </div>
+
+                    <footer class="content">
+                        <a asp-action="MinusCart" asp-route-id="@item.Id" class="qt-minus" style="font-size: 50px; color: black;">-</a>
+                        <span class="qt">@Html.DisplayFor(modelItem => item.Quantity)</span>
+                        <a asp-action="PlusCart" asp-route-id="@item.Id" class="qt-plus" style="font-size: 35px; color: black;">+</a>
+
+                        <h2 class="full-price">
+                            @Convert.ToDecimal(item.Product.Price * item.Quantity).ToString("#,##0") VNĐ
+                        </h2>
+
+                        <h2 class="price">
+                            @Convert.ToDecimal(item.Product.Price).ToString("#,##0") VNĐ
+                        </h2>
+                    </footer>
+                </article>
+                sl += item.Quantity;
+                Tong += item.Product.Price * item.Quantity;
+            }
+        </section>
+    </div>
+
+    <footer id="site-footer">
+        <div class="container clearfix">
+
+            <div class="left">
+                <h6 class="">Quantity: @sl</h6>
+                <h2 class="subtotal">Subtotal: <span>@Convert.ToDecimal(Tong).ToString("#,##0")</span> VNĐ</h2>
+                @*<h3 class="tax">Taxes (5%): <span>8.2</span>€</h3>*@
+                <h3 class="shipping">Shipping: <span>100,000</span> VNĐ</h3>
+            </div>
+            @{ Tong += 100000;}
+            <div class="right">
+                <h1 class="total">Total: <span>@Convert.ToDecimal(Tong).ToString("#,##0")</span> VNĐ</h1>
+                <a asp-action="CheckOut" class="btn">Checkout</a>
+            </div>
+
+        </div>
+    </footer>
+</main>
+
+@section CSS{
+    <link href="~/css/cart.css" rel="stylesheet" />
+}
+
+@section JS{
+    <script>
+        //number.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + "VNĐ"
+        /* Set values + misc */
+
+        var check = false;
+
+        function changeVal(el) {
+            var qt = parseFloat(el.parent().children(".qt").html());
+            var price = parseFloat(el.parent().children(".price").html());
+            var eq = Math.round(price * qt * 100) / 100;
+
+            el.parent().children(".full-price").html(eq + " VNĐ");
+
+            changeTotal();
+        }
+
+        function changeTotal() {
+
+            var price = 0;
+
+            $(".full-price").each(function (index) {
+                price += parseFloat($(".full-price").eq(index).html());
+            });
+
+            price = Math.round(price * 100) / 100;
+            var tax = Math.round(price * 100) / 100
+            var shipping = parseFloat($(".shipping span").html());
+            var fullPrice = Math.round(price * 100) / 100 + shipping;
+
+            if (price == 0) {
+                fullPrice = 0;
+            }
+
+            $(".subtotal span").html(price);
+            $(".tax span").html(tax);
+            $(".total span").html(fullPrice);
+        }
+
+        $(document).ready(function () {
+
+            $(".remove").click(function () {
+                var el = $(this);
+                el.parent().parent().addClass("removed");
+                window.setTimeout(
+                    function () {
+                        el.parent().parent().slideUp('fast', function () {
+                            el.parent().parent().remove();
+                            if ($(".product").length == 0) {
+                                if (check) {
+                                    $("#cart").html("<h1>The shop does not function, yet!</h1><p>If you liked my shopping cart, please take a second and heart this Pen on <a href='https://codepen.io/ziga-miklic/pen/xhpob'>CodePen</a>. Thank you!</p>");
+                                } else {
+                                    $("#cart").html("<h1>No products!</h1>");
+                                }
+                            }
+                            changeTotal();
+                        });
+                    }, 200);
+            });
+
+            $(".qt-plus").click(function () {
+                $(this).parent().children(".qt").html(parseInt($(this).parent().children(".qt").html()) + 1);
+
+                $(this).parent().children(".full-price").addClass("added");
+
+                var el = $(this);
+                window.setTimeout(function () { el.parent().children(".full-price").removeClass("added"); changeVal(el); }, 150);
+            });
+
+            $(".qt-minus").click(function () {
+
+                child = $(this).parent().children(".qt");
+
+                if (parseInt(child.html()) > 1) {
+                    child.html(parseInt(child.html()) - 1);
+                }
+
+                $(this).parent().children(".full-price").addClass("minused");
+
+                var el = $(this);
+                window.setTimeout(function () { el.parent().children(".full-price").removeClass("minused"); changeVal(el); }, 150);
+            });
+
+            window.setTimeout(function () { $(".is-open").removeClass("is-open") }, 1200);
+
+            $(".btn").click(function () {
+                check = true;
+                $(".remove").click();
+            });
+        });
+
+    </script>
+}

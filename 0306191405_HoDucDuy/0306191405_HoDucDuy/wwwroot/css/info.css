@@ -1,0 +1,54 @@
+﻿body {
+}
+.title{
+    font-weight: 700;
+    padding-right:5px;
+}
+.author {
+    padding: 10px 0;
+}
+.email {
+    padding: 10px 0;
+}
+.phone-number {
+    padding: 10px 0;
+}
+.address {
+    padding: 10px 0;
+}
+.customer__addresses-link {
+    margin: 5px 5px 0 0;
+    padding-right: 10px;
+    border-right: solid 1px #2f353d;
+}
+.address-actions a, .customer__addresses-link, .edit-profile-link {
+    color: #336ef2;
+    font-size: 13px;
+    font-size: .8125rem;
+    font-weight: 400;
+    line-height: 16px;
+    text-transform: capitalize;
+}
+.edit-profile-link.last-item {
+    margin-right: 50px;
+}
+.img {
+    width: 100px;
+    height: 60px;
+}
+
+.quantily {
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+.bg-card {
+    background-color: #daeeff;
+    padding: 10px 0;
+    margin: 10px 0;
+}
+
+.price {
+    color: #ff6a00;
+    font-size: 1.1rem;
+}

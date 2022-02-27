@@ -1,0 +1,40 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@{
+    ViewData["Title"] = "Minics";
+    ViewData["SubPage"] = "";
+}
+<a asp-action="Info" class="m-2 pl-4"><strong><i class="fa fa-angle-left"></i> Back</strong></a>    
+<div class="container justify-content-center">
+    <div class="col align-self-center p">
+        <form asp-action="ChangePass" method="post">
+            <div class="form-floating mb-3">
+                <label for="floatingInput">Old Password</label>
+                <input type="password" class="form-control" id="floatingInput" minlength="6" placeholder="" name="Old_Password">
+            </div>
+            <div class="form-floating mb-3">
+                <label for="floatingInput">New Password</label>
+                <input type="password" class="form-control" id="floatingInput" minlength="6" placeholder="" name="New_Password">
+            </div>
+            <div class="form-floating mb-3">
+                <label for="floatingPassword">Confirm Password</label>
+                <input type="password" class="form-control" id="floatingPassword" minlength="6" placeholder="" name="Confirm_Password">
+            </div>
+            <br />
+            <button type="submit" class="btn btn-primary mb-3 ali">Change</button>
+            @if (ViewBag.Result == false)
+            {
+                <div class="alert alert-danger m-auto" role="alert">
+                    Change Failed
+                </div>
+            }
+        </form>
+    </div>
+</div>
+
+@section CSS{
+    <link href="~/admin/css/ad_login.css" rel="stylesheet" />
+}

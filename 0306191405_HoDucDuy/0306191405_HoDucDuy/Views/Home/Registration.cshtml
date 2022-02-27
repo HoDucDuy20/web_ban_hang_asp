@@ -1,0 +1,46 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model _0306191405_HoDucDuy.Areas.Admin.Models.Account
+@{
+    ViewData["Title"] = "Minics";
+    ViewData["SubPage"] = "";
+}
+<div class="container justify-content-center">
+    <div class="col align-self-center p">
+        <form asp-action="Registration" method="post">
+            <div class="form-floating mb-3">
+                <label for="floatingInput">User Name</label>
+                <input type="text" class="form-control" id="floatingInput" maxlength="30" placeholder="" name="UserName">
+            </div>
+            <div class="form-floating mb-3">
+                <label for="floatingInput">Full Name</label>
+                <input type="text" class="form-control" id="floatingInput" placeholder="" name="FullName">
+            </div>
+            <div class="form-floating mb-3">
+                <label for="floatingPassword">Phone</label>
+                <input type="text" class="form-control" id="floatingPassword" minlength="10" maxlength="12" placeholder="" name="Phone">
+            </div>
+            <div class="form-floating mb-3">
+                <label for="floatingPassword">Password</label>
+                <input type="password" class="form-control" id="floatingPassword" maxlength="70" placeholder="" name="Pass">
+            </div>
+            <div class="form-floating mb-3">
+                <label for="floatingPassword">Confirm Password</label>
+                <input type="password" class="form-control" id="floatingPassword" minlength="6" placeholder="" name="Pass2">
+            </div>
+            <br />
+            <button type="submit" class="btn btn-primary mb-3 ali">Registration</button>
+            @if (ViewBag.Result == false)
+            {
+                <div class="alert alert-danger m-auto" role="alert">
+                    Change Failed
+                </div>
+            }
+        </form>
+    </div>
+</div>
+
+@section CSS{
+    <link href="~/admin/css/ad_login.css" rel="stylesheet" />
+}

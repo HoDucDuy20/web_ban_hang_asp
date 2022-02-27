@@ -1,0 +1,142 @@
+﻿@using X.PagedList.Mvc.Common
+@using X.PagedList.Mvc.Core
+@model X.PagedList.IPagedList<_0306191405_HoDucDuy.Areas.Admin.Models.Rate>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Danh sách đánh giá</h1>
+<form asp-action="Index" class="form-group">
+    <div class="row">
+        <div class="col-2">
+            @*<div class="control-label">Class</div>*@
+            <select class="form-control text-light" name="star" onchange="document.getElementById('btnSubmit').click();">
+                @if (ViewBag.star == 0)
+                {
+                    <option value="0" selected>Tất cả</option>
+                    <option value="1">1 sao</option>
+                    <option value="2">2 sao</option>
+                    <option value="3">3 sao</option>
+                    <option value="4">4 sao</option>
+                    <option value="5">5 sao</option>
+                }
+                else if (ViewBag.star == 1)
+                {
+                    <option value="0">Tất cả</option>
+                    <option value="1" selected>1 sao</option>
+                    <option value="2">2 sao</option>
+                    <option value="3">3 sao</option>
+                    <option value="4">4 sao</option>
+                    <option value="5">5 sao</option>
+                }
+                else if (ViewBag.star == 2)
+                {
+                    <option value="0">Tất cả</option>
+                    <option value="1">1 sao</option>
+                    <option value="2" selected>2 sao</option>
+                    <option value="3">3 sao</option>
+                    <option value="4">4 sao</option>
+                    <option value="5">5 sao</option>
+                }
+                else if (ViewBag.star == 3)
+                {
+                    <option value="0">Tất cả</option>
+                    <option value="1">1 sao</option>
+                    <option value="2">2 sao</option>
+                    <option value="3" selected>3 sao</option>
+                    <option value="4">4 sao</option>
+                    <option value="5">5 sao</option>
+                }
+                else if (ViewBag.star == 4)
+                {
+                    <option value="0">Tất cả</option>
+                    <option value="1">1 sao</option>
+                    <option value="2">2 sao</option>
+                    <option value="3">3 sao</option>
+                    <option value="4" selected>4 sao</option>
+                    <option value="5">5 sao</option>
+                }
+                else
+                {
+                    <option value="0">Tất cả</option>
+                    <option value="1">1 sao</option>
+                    <option value="2">2 sao</option>
+                    <option value="3">3 sao</option>
+                    <option value="4">4 sao</option>
+                    <option value="5" selected>5 sao</option>
+                }
+            </select>
+        </div>
+        <div class="col-4">
+            <div class="d-flex">
+                <input type="search" id="form1" name="name" value="@ViewBag.search" class="form-control" placeholder="Tên sản phẩm..." />
+                <button type="submit" class="btn btn-primary">
+                    <i class="mdi mdi-magnify"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <input id="btnSubmit" hidden type="submit" value="submit" />
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @*@Html.DisplayNameFor(model => model.Account)*@
+                Tài khoản
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.Product)*@
+                Sản phẩm
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.Star)*@
+                Số sao
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.Description)*@
+                Nội dung
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.Time)*@
+                Thời gian
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody class="text-light">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Account.Username)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Star)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Time)
+                </td>
+                <td>
+                    @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |*@
+                    <a asp-action="Delete" asp-route-id="@item.Id">Xoá</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div>
+    @Html.PagedListPager(Model, c => Href("~/Admin/Rates/Index?page=" + c), new PagedListRenderOptions
+    {
+       LiElementClasses = new string[] { "page-item" },
+       PageClasses = new string[] { "page-link" }
+    })
+</div>

@@ -1,0 +1,81 @@
+﻿body {
+}
+.star_container{
+    color: yellow;
+}
+.br-color {
+    background-color: #dadada;
+}
+.detail {
+    border-left:solid 1px;
+}
+.pd-name {
+    font-size: 1.5rem;
+    margin: 10px 0 10px 0;
+}
+.price {
+    font-size: 1.8rem;
+    font-weight: 600;
+    background-color: #ff6a00;
+    color: #ffffff;
+    /*color: #303030;*/
+    padding: 0 20px;
+    border-radius: 15px;
+}
+/*.quantily {
+    width: 40px;
+    font-size: 1.1rem;
+    text-align: center;
+    margin: 0 5px;
+    background-color: #f4f4f4;
+}*/
+.up_down {
+    font-size: 0.8rem;
+    font-weight: 100;
+    color: #ffffff;
+    /*color: #414141;*/
+    padding-top: 8px;
+}
+.img{
+    margin: 0 auto;
+   height: 25rem;
+   width: 30rem;
+}
+.promotions {
+    border-radius: 10px;
+    border: 1px solid #b7b7b7;
+    margin-bottom: 10px;
+    padding: 15px 15px 0 15px;
+}
+.add{
+    font-size: 1.3rem;
+    font-weight: 300;
+}
+.textwidget {
+    max-height: 145px;
+    overflow-y: auto;
+    margin-bottom: 5px;
+}
+ul{
+    padding-left: 0;
+    list-style:none;
+}
+.icon-gift {
+    color: #ff0000;
+    padding-right: 5px;
+}
+.rate {
+    height: fit-content;
+    background-color: red;
+    color: white;
+    padding: 1px 12px;
+    border-radius: 15px 15px;
+}
+.quantity-field {
+    background-color: #ffffff;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    padding: 2px;
+    width: 4.75rem;
+}

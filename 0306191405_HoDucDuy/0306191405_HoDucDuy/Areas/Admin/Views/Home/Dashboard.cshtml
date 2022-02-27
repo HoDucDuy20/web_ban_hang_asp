@@ -1,0 +1,251 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@{
+        IEnumerable<_0306191405_HoDucDuy.Areas.Admin.Models.ProductType> productTypes = ViewData["ProductTypes"] as IEnumerable<_0306191405_HoDucDuy.Areas.Admin.Models.ProductType>;
+        IEnumerable<_0306191405_HoDucDuy.Areas.Admin.Models.Product> products = ViewData["Products"] as IEnumerable<_0306191405_HoDucDuy.Areas.Admin.Models.Product>;
+        IEnumerable<_0306191405_HoDucDuy.Areas.Admin.Models.Invoice> invoices = ViewData["Invoices"] as IEnumerable<_0306191405_HoDucDuy.Areas.Admin.Models.Invoice>;
+        IEnumerable<_0306191405_HoDucDuy.Areas.Admin.Models.InvoiceDetail> invoiceDetails = ViewData["InvoiceDetails"] as IEnumerable<_0306191405_HoDucDuy.Areas.Admin.Models.InvoiceDetail>;
+        IEnumerable<_0306191405_HoDucDuy.Areas.Admin.Models.Account> accounts = ViewData["Accounts"] as IEnumerable<_0306191405_HoDucDuy.Areas.Admin.Models.Account>;
+        IEnumerable<_0306191405_HoDucDuy.Areas.Admin.Models.Invoice> revenueStatistics = ViewData["RevenueStatistics"] as IEnumerable<_0306191405_HoDucDuy.Areas.Admin.Models.Invoice>;
+        var sells = invoiceDetails.GroupBy(a => a.Product.Name)
+                            .Select(a => new { quantity = a.Sum(b => b.Quantity), Name = a.Key, Price = a.First().Product.Price, Type = a.First().Product.ProductType.Name }).Take(5)
+                        .OrderByDescending(a => a.quantity)
+                        .ToList();
+    //var produtGroup = products.GroupBy(x => x.ProductType.Name)
+    //                       .Select(x => new { productType = x.Key, numProduct = x.Count() });
+    //List<string> name = new List<string>();
+    //List<int> num = new List<int>();
+    //foreach (var item in produtGroup)
+    //{
+    //    name.Add(item.productType);
+    //    num.Add(item.numProduct);
+    //}
+}
+@{
+    ViewData["Title"] = "Dashboard";
+}
+<div class="container-fluid">
+    <div class="row my-4">
+        <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+            <div class="card bg-secondary">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-9">
+                            <div class="d-flex align-items-center align-self-start">
+                                <h3 class="mb-0 text-black">@products.Count()</h3>
+                                @*<p class="text-success ml-2 mb-0 font-weight-medium">+3.5%</p>*@
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="icon icon-box-success w-100 h-75">
+                                <span class="mdi mdi-reproduction icon-item" style="font-size: 40px;"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="text-muted font-weight-normal text-center">Sản phẩm</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+            <div class="card bg-secondary">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-9">
+                            <div class="d-flex align-items-center align-self-start">
+                                <h3 class="mb-0 text-black">@productTypes.Count()</h3>
+                                @*<p class="text-success ml-2 mb-0 font-weight-medium">+3.5%</p>*@
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="icon icon-box-success w-100 h-75">
+                                <span class="mdi mdi-format-list-bulleted-type icon-item" style="font-size: 40px;"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="text-muted font-weight-normal text-center">Loại sản phẩm</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+            <div class="card bg-secondary">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-9">
+                            <div class="d-flex align-items-center align-self-start">
+                                <h3 class="mb-0 text-black">@invoices.Count()</h3>
+                                @*<p class="text-success ml-2 mb-0 font-weight-medium">+3.5%</p>*@
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="icon icon-box-success w-100 h-75">
+                                <span class="mdi mdi-book-multiple icon-item" style="font-size: 40px;"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="text-muted font-weight-normal text-center">Hoá đơn</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+            <div class="card bg-secondary">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-9">
+                            <div class="d-flex align-items-center align-self-start">
+                                <h3 class="mb-0 text-black">@accounts.Count()</h3>
+                                @*<p class="text-success ml-2 mb-0 font-weight-medium">+3.5%</p>*@
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="icon icon-box-success w-100 h-75">
+                                <span class="mdi mdi-account-outline icon-item" style="font-size: 40px;"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="text-muted font-weight-normal text-center">Tài khoản</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h1>Top 5 sản phẩm bán chạy nhất</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Tên sản phẩm
+                </th>
+                <th>
+                    Loại sản phẩm
+                </th>
+                <th>
+                    Giá
+                </th>
+                <th>
+                    Số lượng bán ra
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody class="text-light">
+            @foreach (var item in sells)
+            {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Type
+                </td>
+                <td>
+                    @Convert.ToDecimal(item.Price).ToString("#,##0.0") VNĐ
+                </td>
+                <td>
+                    @item.quantity
+                </td>
+
+
+            </tr>
+            }
+        </tbody>
+    </table>
+    <hr />
+    <h1>Doanh thu theo tháng</h1>
+    <form asp-action="Dashboard" class="form-group">
+        <div class="row">
+            <div class="col-2">
+                @*<div class="control-label">Class</div>*@
+                <select class="form-control text-light" name="month" onchange="document.getElementById('btnSubmit').click();">
+                    @for (int i = 1; i <= 12; i++)
+                    {
+                        if (ViewBag.month == i)
+                        {
+                            <option value="@i" selected>Tháng @i</option>
+                        }
+                        else
+                        {
+                            <option value="@i">Tháng @i</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-4">
+                @{ long tong = 0;}
+                @foreach (var item in revenueStatistics)
+                {
+                    tong += item.Total;
+                }
+                <h4 class="mt-2">Tổng doanh thu: @Convert.ToDecimal(tong).ToString("#,##0.0") VNĐ</h4>
+            </div>
+            <input id="btnSubmit" hidden type="submit" value="submit" />
+        </div>
+    </form>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Mã hoá đơn
+                </th>
+                <th>
+                    Khách hàng
+                </th>
+                <th>
+                    Ngày lập
+                </th>
+                <th>
+                    Địa chỉ giao hàng
+                </th>
+                <th>
+                    Số điện thoại
+                </th>
+                <th>
+                    Tổng tiền
+                </th>
+            </tr>
+        </thead>
+        <tbody class="text-light">
+            @foreach (var item in revenueStatistics)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Code)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Account.FullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IssuedDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ShippingAddress)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ShippingPhone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Total)
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+    <hr />
+    <!--chart-->
+    @*<div class="row justify-content-around mb-4">
+            <div class="col-7 bg-light">
+                <canvas id="myChart1"></canvas>
+            </div>
+            <div class="col-4 bg-light">
+                <canvas id="myChart2"></canvas>
+            </div>
+        </div>*@
+</div>
+@section CSS{
+    <link href="~/admin/css/ad_dashboard.css" rel="stylesheet" />
+}
+@section JS{
+    <script src="~/admin/vendors/chart.min.js"></script>
+    <script src="~/admin/js/ad_dashboard.js"></script>
+}

@@ -1,0 +1,24 @@
+﻿body {
+}
+.scroll{
+    overflow-x:auto;
+}
+
+.sidebar .nav.sub-menu .nav-item .nav-link.active {
+    color: #f7f7f7 !important;
+}
+
+.sidebar .nav .nav-item.active > .nav-link:before {
+    background: none !important;
+}
+.sidebar .nav .nav-item.active > .nav-link {
+    background: none !important;
+}
+
+.sidebar .nav.sub-menu .nav-item .nav-link {
+    color: #f7f7f7 !important;
+}
+
+.sidebar .nav .nav-item .nav-link .menu-title {
+    color: #78ffe4 !important;
+}

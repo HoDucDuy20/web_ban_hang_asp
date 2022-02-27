@@ -1,0 +1,124 @@
+﻿@model _0306191405_HoDucDuy.Areas.Admin.Models.ReasonForChoice
+
+@{
+    ViewData["Title"] = "Index";
+}
+@{
+    IEnumerable<_0306191405_HoDucDuy.Areas.Admin.Models.ReasonForChoice> reasonForChoices = ViewData["ReasonForChoices"] as IEnumerable<_0306191405_HoDucDuy.Areas.Admin.Models.ReasonForChoice>;
+    var id = ViewData["id"];
+}
+<h1>Các lý do</h1>
+
+@if (id != null)
+{
+    <div class="row py-3">
+        <div class="col">
+            <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" name="id" asp-for="id" />
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label asp-for="Reason" class="control-label"></label>
+                            <input asp-for="Reason" class="form-control" />
+                            <span asp-validation-for="Reason" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ImageFile" class="control-label"></label>
+                            <input type="hidden" asp-for="Image" />
+                            <input asp-for="ImageFile" class="form-control" />
+                            <span asp-validation-for="ImageFile" class="text-danger"></span>
+                            <span id="validate" class="text-danger" style="display: none;">Ảnh không đúng định dạng .jpg hoặc .jpeg hoặc .png</span>
+                            <br />
+                            <img id="imgPreview" style="width: 200px;" src="~/img/reason/@Model.Image" />
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label asp-for="Description" class="control-label"></label>
+                            <textarea asp-for="Description" class="form-control" rows="7"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <a asp-action="index" asp-route-id="" class="btn btn-primary">Huỷ</a>&nbsp;&nbsp;
+                            <input type="submit" value="Lưu" class="btn btn-primary" />
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                @*<div class="form-group form-check">
+            <label class="form-check-label">
+                <input class="form-check-input" asp-for="Status" /> @Html.DisplayNameFor(model => model.Status)
+            </label>
+        </div>*@
+                
+            </form>
+        </div>
+    </div>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Reason)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>*@
+            <th></th>
+        </tr>
+    </thead>
+    <tbody class="text-light">
+        @foreach (var item in reasonForChoices)
+        {
+            <tr>
+                <td>
+                    <img class="rounded" id="imgPreview" style="width: 50px;" src="~/img/reason/@Html.DisplayFor(modelItem => item.Image)" />
+                    @*@Html.DisplayFor(modelItem => item.Image)*@
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Reason)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>*@
+                <td>
+                    <a asp-action="Index" asp-route-id="@item.id">Chỉnh sửa</a>
+                    @*<a asp-action="Details" asp-route-id="@item.id">Details</a> |*@
+                    @*<a asp-action="Delete" asp-route-id="@item.id">Xoá</a>*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section JS {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function () {
+            $("#ImageFile").on("change", function (e) {
+                var test_value = $("#ImageFile").val();
+                var extension = test_value.split('.').pop().toLowerCase();
+                if ($.inArray(extension, ['png', 'jpeg', 'jpg']) == -1) {
+                    $("#ImageFile").val('');
+                    $("#validate").show();
+                    $("#imgPreview").hide().attr("src", filePath);
+                    return false;
+                } else {
+                    var filePath = URL.createObjectURL(e.target.files[0]);
+                    $("#validate").hide();
+                    $("#imgPreview").show().attr("src", filePath);
+                }
+            });
+        });
+    </script>
+}

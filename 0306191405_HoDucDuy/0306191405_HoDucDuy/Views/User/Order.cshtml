@@ -1,0 +1,94 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model IEnumerable<_0306191405_HoDucDuy.Areas.Admin.Models.Invoice>
+
+@{
+    ViewData["Title"] = "Minics";
+    ViewData["SubPage"] = "";
+}
+<a asp-action="Info" class="m-2 pl-4"><strong><i class="fa fa-angle-left"></i> Back</strong></a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @*@Html.DisplayNameFor(model => model.Code)*@
+                <div>Code</div>
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.IssuedDate)*@
+                <div>Issued Date</div>
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.ShippingAddress)*@
+                <div>Shipping Address</div>
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.ShippingPhone)*@
+                <div>Shipping Phone</div>
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.Total)*@
+                <div>Total</div>
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.Status)*@
+                <div>Status</div>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IssuedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShippingAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShippingPhone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Total)
+            </td>
+            <td>
+                @if (item.Status == 0)
+                {
+                    <p>Đã huỷ</p>
+                }
+                else if (item.Status == 1)
+                {
+                    <p>Đang chờ</p>
+                }
+                else if (item.Status == 2)
+                {
+                    <p>Đang giao</p>
+                }
+                else
+                {
+                    <p>Đã giao</p>
+                }
+            </td>
+
+            @if (item.Status == 1)
+            {
+                <td>
+                    <a asp-action="Cancel" asp-route-id="@item.Id">Cancel</a> | <a asp-action="InvoiceDetails" asp-route-id="@item.Id"> View </a>
+                </td>
+            }
+            else
+            {
+                <td>
+                    <a asp-action="InvoiceDetails" asp-route-id="@item.Id"> View </a>
+                </td>
+            }
+        </tr>
+        }
+    </tbody>
+</table>

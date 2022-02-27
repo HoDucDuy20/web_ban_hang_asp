@@ -1,0 +1,43 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model IEnumerable<_0306191405_HoDucDuy.Areas.Admin.Models.About>
+@{
+    ViewData["Title"] = "Minics";
+    ViewData["SubPage"] = "sub_page";
+}
+
+</div>
+
+<!-- about section -->
+@foreach (var item in Model)
+{
+    <section class="about_section">
+        <div class="container-fluid ">
+            <div class="row">
+                <div class="col-md-5 ml-auto">
+                    <div class="detail-box pr-md-3">
+                        <div class="heading_container">
+                            <h2>
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </h2>
+                        </div>
+                        <p>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </p>
+                        @*<a href="">
+                            Read More
+                        </a>*@
+                    </div>
+                </div>
+                <div class="col-md-6 px-0">
+                    <div class="img-box">
+                        <img src="~/img/about/@Html.DisplayFor(modelItem => item.Image)" alt="Alternate Text" />
+                        @*<img src="~/images/about-img.jpg" alt="">*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+<!-- end about section -->
